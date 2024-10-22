@@ -4,18 +4,23 @@ LDFLAGS       = -L/usr/local/lib
 AR            = ar
 
 TARGET = ../test.a
+INTERMED = test_intermediate.a
+LINKAGES = ../../yges_c.a
 OBJS   = trash/dummy2.o 
 
 all: $(TARGET)
 
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(TARGET) $(INTERMED) $(OBJS)
 
-$(TARGET): $(OBJS)
-	ar r test_tmp.a $(OBJS)
-	ar crsT $(TARGET) ../../yges_c.a test_tmp.a
+$(TARGET): $(INTERMED) $(LINKAGES)
+	rm -f $(TARGET)
+	ar crsT $(TARGET) $(LINKAGES) $(INTERMED)
 
-%.o: %.c
+$(INTERMED): $(OBJS) $(LINKAGES)
+	ar r $(INTERMED) $(OBJS)
+
+%.o: %.c $(LINKAGES)
 	$(CC) -o $@ -c $< $(CFLAGS)
 
-.PHONY: clean
+.PHONY: all clean
