@@ -4,7 +4,7 @@ LDFLAGS       = -L/usr/local/lib
 AR            = ar
 
 TARGET = ../yges_c.a
-OBJS   = trash/dummy.o 
+OBJS   = memory/safe_alloc.o trash/dummy.o
 
 all: $(TARGET)
 	ar r $(TARGET) $(OBJS)
