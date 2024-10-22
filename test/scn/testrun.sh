@@ -34,18 +34,26 @@ test_one () {
 
 	# Execute and result.
 	"$BASEDIR/$EXE" > "$LOGPATH"
-	if [ $? -ne 0 ]; then
-		EXITCODE=1
-
-		# Bad end in a scenario.
-		echo "* [FAILED] $EXE (see $LOGFILE)"
-		echo "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*"
-	fi
+	RESULT=$?
 
 	# Remove empty log file.
 	LOGSIZE=`wc -c "$LOGPATH" | cut -d' ' -f1`
 	if [ $LOGSIZE = 0 ]; then
 		rm "$LOGPATH"
+	fi
+
+	if [ $RESULT -ne 0 ]; then
+		EXITCODE=1
+
+		if [ -f "$LOGPATH" ]; then
+			LOGINFO="see $LOGFILE"
+		else
+			LOGINFO="no logfile"
+		fi
+
+		# Bad end in a scenario.
+		echo "* [FAILED] $EXE ($LOGINFO)"
+		echo "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*"
 	fi
 }
 
