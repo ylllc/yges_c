@@ -11,7 +11,7 @@ OBJS   = trash/dummy2.o
 all: $(TARGET)
 
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(TARGET) $(INTERMED) $(OBJS)
 
 $(TARGET): $(INTERMED) $(LINKAGES)
 	rm -f $(TARGET)
