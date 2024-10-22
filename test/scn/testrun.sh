@@ -3,6 +3,9 @@
 # The work directory always this place. 
 cd $(dirname $0)
 
+# Log directory.
+LOGDIR=../log
+
 # Become 1 if failed.
 EXITCODE=0
 
@@ -11,19 +14,38 @@ if [ -z $BASEDIR ]; then
 	BASEDIR='.'
 fi
 
+# Prepare log directory.
+if ! [ -d "$LOGDIR" ]; then
+	mkdir "$LOGDIR"
+fi
+
 # Test a scenario. 
 test_one () {
 
+	# EXE path.
 	tmp=$1
 	EXE=${tmp#$BASEDIR/}
 
-	"$BASEDIR/$EXE"
+	# Log path.
+	DATE=`date +%Y%m%d-%H%M%S`
+	PATH2=`echo $EXE | sed -e 's/\//~/g'`
+	LOGFILE="${DATE}_${PATH2%.*}.log"
+	LOGPATH="${LOGDIR}/${LOGFILE}"
+
+	# Execute and result.
+	"$BASEDIR/$EXE" > "$LOGPATH"
 	if [ $? -ne 0 ]; then
 		EXITCODE=1
 
 		# Bad end in a scenario.
-		echo "* [FAILED] $EXE"
+		echo "* [FAILED] $EXE (see $LOGFILE)"
 		echo "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*"
+	fi
+
+	# Remove empty log file.
+	LOGSIZE=`wc -c "$LOGPATH" | cut -d' ' -f1`
+	if [ $LOGSIZE = 0 ]; then
+		rm "$LOGPATH"
 	fi
 }
 
