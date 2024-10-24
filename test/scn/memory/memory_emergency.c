@@ -20,8 +20,6 @@ static YgEsEmergencyContext TestEmergencyContext;
 /* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 static int on_emergency_ctx(YgEsEmergencyContext* ctx,const char* cause,void* info,const char* file,int line){
 
-fprintf(stderr,"emergency: %s (%s:%d)\n",cause,file,line);
-
 	// ignore from other causes 
 	if(cause!=YgEsEmergencyCause_OutOfMemory)return 0;
 
