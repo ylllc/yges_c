@@ -6,6 +6,8 @@
 #include "./emergency_trap.h"
 #include <stdlib.h>
 
+#include "./nullproof.h"
+
 FYgEsExitProc gYgEsExitProc=NULL;
 
 static YgEsEmergencyContext* EmergencyStack=NULL;
@@ -13,7 +15,7 @@ static YgEsEmergencyContext* EmergencyStack=NULL;
 /* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 void yges_register_emergency(YgEsEmergencyContext* src){
 
-	if(!src)return;
+	if(yges_nullproof(src))return;
 
 	// link to EmergencyStack 
 	src->_next=NULL;
@@ -24,7 +26,7 @@ void yges_register_emergency(YgEsEmergencyContext* src){
 /* ----------------------------------------------------------------------- */
 void yges_remove_emergency(YgEsEmergencyContext* src){
 
-	if(!src)return;
+	if(yges_nullproof(src))return;
 
 	YgEsEmergencyContext* prev=NULL;
 	for(YgEsEmergencyContext* ctx=EmergencyStack;ctx;prev=ctx,ctx=ctx->_next){
