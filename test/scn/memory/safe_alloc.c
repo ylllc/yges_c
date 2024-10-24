@@ -1,3 +1,8 @@
+﻿/* † Yggdrasil Essence † */
+/*!	@brief  Safety Memory Allocator Test
+	@author  Copyright © 2024 Yggdrasil Leaves, LLC.
+	@sa  https://github.com/ylllc/yges_c
+*/
 #include "memory/safe_alloc.h"
 #include <stdio.h>
 #include <string.h>
