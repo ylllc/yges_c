@@ -4,7 +4,7 @@ LDFLAGS       = -L/usr/local/lib
 AR            = ar
 
 TARGET = \
-	system/emergency.exe \
+	system/emergency.exe system/nullproof.exe \
 	memory/safe_alloc.exe \
 	test_always.exe trash/test_never.exe 
 
