@@ -8,8 +8,7 @@ INTERMED = test_intermediate.a
 LINKAGES = ../../yges_c.a
 OBJS   = \
 	test_nullproof/test_null_thru.o test_nullproof/test_null_trap.o \
-	test_nullproof/test_null_report.o \
-	trash/dummy2.o 
+	test_nullproof/test_null_report.o
 
 all: $(TARGET)
 
