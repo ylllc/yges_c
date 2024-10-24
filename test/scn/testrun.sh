@@ -32,6 +32,14 @@ test_one () {
 	LOGFILE="${DATE}_${PATH2%.*}.log"
 	LOGPATH="${LOGDIR}/${LOGFILE}"
 
+	# Test Settings 
+	TEST_WILL_EXIT_WITH=0
+
+	CFGFILE="${EXE%.*}.cfg"
+	if [ -f $CFGFILE ]; then
+		source $CFGFILE
+	fi
+
 	# Execute and result.
 	"$BASEDIR/$EXE" > "$LOGPATH"
 	RESULT=$?
@@ -42,7 +50,7 @@ test_one () {
 		rm "$LOGPATH"
 	fi
 
-	if [ $RESULT -ne 0 ]; then
+	if [ "$RESULT" != "$TEST_WILL_EXIT_WITH" ]; then
 		EXITCODE=1
 
 		if [ -f "$LOGPATH" ]; then
