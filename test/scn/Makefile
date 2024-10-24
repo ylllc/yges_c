@@ -3,7 +3,10 @@ CFLAGS        = -O4 -Wall -I/usr/local/include -I../../api -I../lib
 LDFLAGS       = -L/usr/local/lib
 AR            = ar
 
-TARGET = memory/safe_alloc.exe test_always.exe trash/test_never.exe 
+TARGET = \
+	system/emergency/emergency_trap.exe \
+	memory/safe_alloc.exe \
+	test_always.exe trash/test_never.exe 
 
 all: $(TARGET)
 
