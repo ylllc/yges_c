@@ -6,8 +6,7 @@ AR            = ar
 TARGET = ../yges_c.a
 OBJS   = \
 	system/emergency_trap.o system/nullproof.o \
-	memory/safe_alloc.o \
-	trash/dummy.o
+	memory/safe_alloc.o
 
 all: $(TARGET)
 	ar r $(TARGET) $(OBJS)

@@ -5,8 +5,7 @@ AR            = ar
 
 TARGET = \
 	system/emergency.exe system/nullproof.exe \
-	memory/safe_alloc.exe memory/memory_emergency.exe \
-	test_always.exe trash/test_never.exe 
+	memory/safe_alloc.exe memory/memory_emergency.exe
 
 all: $(TARGET)
 
