@@ -60,7 +60,7 @@ test_one () {
 		fi
 
 		# Bad end in a scenario.
-		echo "* [FAILED] $EXE ($LOGINFO)"
+		echo "* [FAILED] $EXE exited as $RESULT ($LOGINFO)"
 		echo "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*"
 	fi
 }
