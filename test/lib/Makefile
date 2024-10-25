@@ -1,5 +1,6 @@
 CC            = gcc
 CFLAGS        = -O4 -Wall -I/usr/local/include -I../../api
+CPPFLAGS      = $(CFLAGS)
 LDFLAGS       = -L/usr/local/lib
 AR            = ar
 
@@ -24,5 +25,7 @@ $(INTERMED): $(OBJS) $(LINKAGES)
 
 %.o: %.c $(LINKAGES)
 	$(CC) -o $@ -c $< $(CFLAGS)
+%.o: %.cpp
+	$(CC) -o $@ -c $< $(CPPFLAGS)
 
 .PHONY: all clean
