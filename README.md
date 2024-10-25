@@ -18,6 +18,7 @@ install it.
 
 optional,
 - [GraphViz](https://graphviz.org/)
+  - [OpenJDK](https://openjdk.org/) required
 
 ### Build
 
