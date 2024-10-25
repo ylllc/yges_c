@@ -18,7 +18,10 @@ extern FYgEsExitProc gYgEsExitProc;
 
 //! emergency function type 
 /*!	@param ctx  source context
+	@param cause  emergency cause (should be a global string for compare by a pointer)
 	@param info  emergency info (definition by each causes)
+	@param file  happened source file
+	@param line  happened line of the source file
 	@return  exit code (0=continuable, be ignored)
 */
 typedef int (*FYgEsEmergency)(YgEsEmergencyContext* ctx,const char* cause,void* info,const char* file,int line);
@@ -49,7 +52,7 @@ void yges_register_emergency(YgEsEmergencyContext* ctx);
 */
 void yges_remove_emergency(YgEsEmergencyContext* ctx);
 
-//! call by emergency 
+//! call by emergency happened 
 /*	@param cause  emergency cause (should be a global string for compare by a pointer)
 	@param info  emergency info (definition by each causes)
 	@param file  happened source file
