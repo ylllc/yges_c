@@ -8,7 +8,8 @@ TARGET = ../yges_c.a
 OBJS   = \
 	system/emergency_trap.o system/nullproof.o \
 	system/emergency_trap_pp.o \
-	memory/safe_alloc.o
+	memory/safe_alloc.o \
+	file/quick_loader.o file/quick_loader_pp.o
 
 all: $(TARGET)
 	ar r $(TARGET) $(OBJS)

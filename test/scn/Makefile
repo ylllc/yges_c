@@ -6,7 +6,8 @@ AR            = ar
 
 TARGET = \
 	system/emergency.exe system/emergency_pp.exe system/nullproof.exe \
-	memory/safe_alloc.exe memory/memory_emergency.exe
+	memory/safe_alloc.exe memory/memory_emergency.exe \
+	file/quick_loader.exe file/quick_loader_pp.exe
 
 all: $(TARGET)
 
