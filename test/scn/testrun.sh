@@ -10,9 +10,20 @@ LOGDIR=../log
 # Become 1 if failed.
 EXITCODE=0
 
+# running target directory 
 BASEDIR=$1
-if [ -z $BASEDIR ]; then
+if [ -z "$BASEDIR" ]; then
 	BASEDIR='.'
+fi
+
+# Reject illegal basedir 
+if [[ ${BASEDIR:0:1} = '/' ]]; then
+	echo "* Illegal BASEDIR"
+	exit 1
+fi
+if [[ $BASEDIR =~ \.\. ]]; then
+	echo "* Illegal BASEDIR"
+	exit 1
 fi
 
 # Prepare log directory.
@@ -23,30 +34,35 @@ fi
 # Test a scenario. 
 test_one () {
 
-	# EXE path.
-	tmp=$1
-	EXE=${tmp#$BASEDIR/}
+	# EXE local path.
+	EXENAME=$1
+	if [ ${EXENAME:0:2} = './' ]; then
+		EXENAME=${EXENAME:2}
+	fi
 
 	# Log path.
 	DATE=`date +%Y%m%d-%H%M%S`
-	PATH2=`echo $EXE | sed -e 's/\//~/g'`
+	PATH2=`echo $EXENAME | sed -e 's/\//~/g'`
 	LOGFILE="${DATE}_${PATH2%.*}.log"
-	LOGPATH="$ROOTDIR/$BASEDIR/${LOGDIR}/${LOGFILE}"
+	LOGPATH="$ROOTDIR/$LOGDIR/$LOGFILE"
 
-	# Test Settings 
+	# Test settings.
 	TEST_WILL_EXIT_WITH=0
 
-	CFGFILE="${EXE%.*}.cfg"
+	# Work directory and binary path.
+	WORKDIR="$ROOTDIR/$(dirname $EXENAME)"
+	EXEFILE=$(basename $EXENAME)
+
+	pushd "$WORKDIR" >/dev/null
+
+	# Config file 
+	CFGFILE="${EXEFILE%.*}.cfg"
 	if [ -f $CFGFILE ]; then
 		source $CFGFILE
 	fi
 
 	# Execute and result.
-	WORKDIR="$BASEDIR/$(dirname $EXE)"
-	EXENAME=$(basename $EXE)
-
-	pushd "$WORKDIR" >/dev/null
-	"./$EXENAME" > "$LOGPATH"
+	"./$EXEFILE" > "$LOGPATH"
 	RESULT=$?
 	popd >/dev/null
 
@@ -66,7 +82,7 @@ test_one () {
 		fi
 
 		# Bad end in a scenario.
-		echo "* [FAILED] $EXE exited as $RESULT ($LOGINFO)"
+		echo "* [FAILED] $EXENAME exited as $RESULT ($LOGINFO)"
 		echo "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*"
 	fi
 }
@@ -74,8 +90,6 @@ test_one () {
 # Find all scenaria in the base directory 
 # And run them.
 test_all () {
-
-echo "test_all"
 
 	while read exe
 	do
