@@ -38,7 +38,7 @@ You can add any directories and source files in test/scn/ to add your test scena
 
 ### Partial Test
 
-$ test/scn/testrun.sh <TargetDirectory>
+$ test/scn/testrun.sh \<TargetDirectory\>
 
 TargetDirectory based from test/scn/
 TestRunner enumerates test scenaria only in TargetDirectory.
