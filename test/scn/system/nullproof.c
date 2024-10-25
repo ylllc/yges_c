@@ -18,34 +18,36 @@ extern int Test_NullReported;
 static int ExitCode_Failure=1;
 
 //! test emergency context 
-static YgEsEmergencyContext TestEmergencyContext;
+static YgEsEmergencyContext MyEmergency;
 
 //! test emergency info 
-typedef struct EmergencyInfo_ EmergencyInfo;
-struct EmergencyInfo_{
+typedef struct TestScn_system_nullproof_EmergencyInfo_ TestScn_system_nullproof_EmergencyInfo;
+struct TestScn_system_nullproof_EmergencyInfo_{
 	int Called;
 };
-static EmergencyInfo TestEmergencyInfo;
+static TestScn_system_nullproof_EmergencyInfo TestEmergencyInfo;
 
+/* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 static int on_emergency(YgEsEmergencyContext* ctx,const char* cause,void* info,const char* file,int line){
 
 	// ignore from other causes 
 	if(cause!=YgEsEmergencyCause_Nullpo)return 0;
 
-	EmergencyInfo* info_c=ctx->User;
+	TestScn_system_nullproof_EmergencyInfo* info_c=ctx->User;
 	++info_c->Called;
 
 	return 0;
 }
 
+/* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 int main(){
 
 	// emergency settings 
-	TestEmergencyContext.Enabled=true;
-	TestEmergencyContext.Hook=on_emergency;
-	TestEmergencyContext.User=&TestEmergencyInfo;
+	MyEmergency.Enabled=true;
+	MyEmergency.Hook=on_emergency;
+	MyEmergency.User=&TestEmergencyInfo;
 	TestEmergencyInfo.Called=0;
-	yges_register_emergency(&TestEmergencyContext);
+	yges_register_emergency(&MyEmergency);
 
 	// null check only 
 	test_null_thru(NULL);
