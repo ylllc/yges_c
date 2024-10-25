@@ -2,6 +2,7 @@
 
 # The work directory always this place. 
 cd $(dirname $0)
+ROOTDIR=$PWD
 
 # Log directory.
 LOGDIR=../log
@@ -30,7 +31,7 @@ test_one () {
 	DATE=`date +%Y%m%d-%H%M%S`
 	PATH2=`echo $EXE | sed -e 's/\//~/g'`
 	LOGFILE="${DATE}_${PATH2%.*}.log"
-	LOGPATH="${LOGDIR}/${LOGFILE}"
+	LOGPATH="$ROOTDIR/$BASEDIR/${LOGDIR}/${LOGFILE}"
 
 	# Test Settings 
 	TEST_WILL_EXIT_WITH=0
@@ -41,8 +42,13 @@ test_one () {
 	fi
 
 	# Execute and result.
-	"$BASEDIR/$EXE" > "$LOGPATH"
+	WORKDIR="$BASEDIR/$(dirname $EXE)"
+	EXENAME=$(basename $EXE)
+
+	pushd "$WORKDIR" >/dev/null
+	"./$EXENAME" > "$LOGPATH"
 	RESULT=$?
+	popd >/dev/null
 
 	# Remove empty log file.
 	LOGSIZE=`wc -c "$LOGPATH" | cut -d' ' -f1`
@@ -68,6 +74,8 @@ test_one () {
 # Find all scenaria in the base directory 
 # And run them.
 test_all () {
+
+echo "test_all"
 
 	while read exe
 	do
