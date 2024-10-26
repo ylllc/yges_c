@@ -8,6 +8,7 @@
 
 namespace yges{
 
+	//! inherited class is uncopyable 
 	class DontCopy{
 		protected:
 		// can construct from only inherited class 
