@@ -7,6 +7,7 @@
 #define YGES_EMERGENCY_TRAP_HPP__
 
 #include "./emergency_trap.h"
+#include "./dontcopy.hpp"
 
 namespace yges{
 
@@ -18,7 +19,7 @@ namespace yges{
 			starting in disabled, 
 			need calling Enable() to enable. @n
 	*/
-	class EmergencyContext{
+	class EmergencyContext: DontCopy{
 		public:
 		virtual ~EmergencyContext();
 		EmergencyContext();
