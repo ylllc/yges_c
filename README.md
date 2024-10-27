@@ -44,3 +44,7 @@ $ test/scn/testrun.sh <TargetDirectory>
 
 TargetDirectory based from test/scn/
 TestRunner enumerates test scenaria only in TargetDirectory.
+
+### for Windows
+
+can run on [MSYS2](https://www.msys2.org/) with MinGW
