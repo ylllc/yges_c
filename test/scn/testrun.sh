@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# † Simple Test Runner for built EXE †
+# Copyright © 2024 Yggdrasil Leaves, LLC.
+# https://github.com/ylllc/yges_c
+
 # The work directory always this place. 
 cd $(dirname $0)
 ROOTDIR=$PWD
